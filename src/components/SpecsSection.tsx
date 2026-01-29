@@ -17,7 +17,7 @@ export const SpecsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="relative py-32 px-6 md:px-12 bg-zenith-black border-t border-zenith-white/5">
+    <section ref={ref} className="relative py-32 px-6 md:px-12 bg-varg-black border-t border-varg-white/5">
       <div className="max-w-7xl mx-auto">
         <motion.div
           className="mb-16"
@@ -31,11 +31,11 @@ export const SpecsSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-zenith-white/10 rounded-2xl overflow-hidden">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-varg-white/10 rounded-2xl overflow-hidden">
           {specs.map((spec, index) => (
             <motion.div
               key={spec.label}
-              className="bg-zenith-black p-8"
+              className="bg-varg-black p-8"
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: index * 0.05 }}

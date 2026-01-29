@@ -1,15 +1,17 @@
 import Header from "@/components/Header";
 import HeadphoneScroll from "@/components/HeadphoneScroll";
+import Headphone3DSection from "@/components/Headphone3DSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import SpecsSection from "@/components/SpecsSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="bg-zenith-black min-h-screen">
+    <div className="bg-varg-black min-h-screen">
       <Header />
       <main>
         <HeadphoneScroll />
+        <Headphone3DSection />
         <FeaturesSection />
         <SpecsSection />
       </main>
