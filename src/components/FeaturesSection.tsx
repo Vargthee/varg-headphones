@@ -54,12 +54,12 @@ const FeatureCard = ({ feature, index }: { feature: typeof features[0]; index: n
   return (
     <motion.div
       ref={ref}
-      className="glass-card p-8 group hover:bg-zenith-dark/70 transition-colors duration-500"
+      className="glass-card p-8 group hover:bg-varg-dark/70 transition-colors duration-500"
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
     >
-      <div className="text-zenith-accent mb-6 group-hover:text-zenith-light transition-colors">
+      <div className="text-varg-accent mb-6 group-hover:text-varg-light transition-colors">
         {feature.icon}
       </div>
       <h3 className="text-hero text-xl mb-3">{feature.title}</h3>
@@ -73,7 +73,7 @@ export const FeaturesSection = () => {
   const isHeaderInView = useInView(headerRef, { once: true });
 
   return (
-    <section className="relative py-32 px-6 md:px-12 bg-zenith-black">
+    <section className="relative py-32 px-6 md:px-12 bg-varg-black">
       <div className="max-w-7xl mx-auto">
         <motion.div
           ref={headerRef}

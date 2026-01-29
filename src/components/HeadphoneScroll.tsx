@@ -57,10 +57,10 @@ const TextOverlay = ({ children, progress, start, end, align = "center" }: TextO
 };
 
 const LoadingSpinner = () => (
-  <div className="absolute inset-0 flex items-center justify-center bg-zenith-black z-50">
+  <div className="absolute inset-0 flex items-center justify-center bg-varg-black z-50">
     <div className="relative">
-      <div className="w-16 h-16 border border-zenith-white/20 rounded-full" />
-      <div className="absolute inset-0 w-16 h-16 border-t border-zenith-white/80 rounded-full animate-spin" />
+      <div className="w-16 h-16 border border-varg-white/20 rounded-full" />
+      <div className="absolute inset-0 w-16 h-16 border-t border-varg-white/80 rounded-full animate-spin" />
     </div>
     <span className="absolute mt-24 text-caption">Loading experience...</span>
   </div>
@@ -116,37 +116,29 @@ export const HeadphoneScroll = () => {
       const progress = smoothProgress.get();
       
       // Determine which image to show based on progress
-      // 0-0.33: Hero (assembled)
-      // 0.33-0.66: Exploded view
-      // 0.66-1: Driver detail / back to hero
-      
       let imageIndex: number;
       let crossfadeOpacity = 1;
       
       if (progress < 0.25) {
-        imageIndex = 0; // Hero
+        imageIndex = 0;
       } else if (progress < 0.35) {
-        // Crossfade from hero to exploded
         imageIndex = 0;
         const t = (progress - 0.25) / 0.1;
         crossfadeOpacity = 1 - t;
       } else if (progress < 0.55) {
-        imageIndex = 1; // Exploded
+        imageIndex = 1;
       } else if (progress < 0.65) {
-        // Crossfade from exploded to driver
         imageIndex = 1;
         const t = (progress - 0.55) / 0.1;
         crossfadeOpacity = 1 - t;
       } else if (progress < 0.85) {
-        imageIndex = 2; // Driver
+        imageIndex = 2;
       } else {
-        // Crossfade back to hero
         imageIndex = 2;
         const t = (progress - 0.85) / 0.15;
         crossfadeOpacity = 1 - t;
       }
 
-      // Get next image for crossfade
       let nextImageIndex: number | null = null;
       if (progress >= 0.25 && progress < 0.35) {
         nextImageIndex = 1;
@@ -156,18 +148,16 @@ export const HeadphoneScroll = () => {
         nextImageIndex = 0;
       }
 
-      // Clear canvas
       ctx.fillStyle = "#050505";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const drawImageCentered = (img: HTMLImageElement, opacity: number) => {
         ctx.globalAlpha = opacity;
         
-        // Calculate scaling to fit while maintaining aspect ratio
         const scale = Math.min(
           canvas.width / img.width,
           canvas.height / img.height
-        ) * 0.85; // 85% of viewport for padding
+        ) * 0.85;
         
         const w = img.width * scale;
         const h = img.height * scale;
@@ -178,18 +168,15 @@ export const HeadphoneScroll = () => {
         ctx.globalAlpha = 1;
       };
 
-      // Draw current image
       if (loadedImages[imageIndex]) {
         drawImageCentered(loadedImages[imageIndex], crossfadeOpacity);
       }
 
-      // Draw next image for crossfade
       if (nextImageIndex !== null && loadedImages[nextImageIndex]) {
         drawImageCentered(loadedImages[nextImageIndex], 1 - crossfadeOpacity);
       }
     };
 
-    // Resize canvas to match display size
     const resizeCanvas = () => {
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
@@ -219,25 +206,22 @@ export const HeadphoneScroll = () => {
   }, [progress]);
 
   return (
-    <div ref={containerRef} className="relative h-[400vh] bg-zenith-black">
+    <div ref={containerRef} className="relative h-[400vh] bg-varg-black">
       {!imagesLoaded && <LoadingSpinner />}
       
       <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* Subtle gradient overlay */}
         <div className="absolute inset-0 gradient-spotlight pointer-events-none z-[5]" />
         
-        {/* Canvas */}
         <canvas
           ref={canvasRef}
           className="absolute inset-0 w-full h-full"
           style={{ background: "#050505" }}
         />
 
-        {/* Text Overlays */}
         <TextOverlay progress={currentProgress} start={0} end={0.22} align="center">
           <motion.span className="text-caption mb-4">Premium Audio</motion.span>
           <h1 className="text-hero text-5xl md:text-7xl lg:text-8xl xl:text-9xl leading-none">
-            Zenith X.
+            Varg X.
           </h1>
           <p className="text-hero text-3xl md:text-4xl lg:text-5xl mt-2 opacity-60">
             Pure Sound.
@@ -270,7 +254,7 @@ export const HeadphoneScroll = () => {
             Hear Everything.
           </h2>
           <motion.button
-            className="mt-8 px-8 py-4 bg-zenith-white text-zenith-black font-medium rounded-full text-lg hover:bg-zenith-light transition-colors"
+            className="mt-8 px-8 py-4 bg-varg-white text-varg-black font-medium rounded-full text-lg hover:bg-varg-light transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -278,7 +262,6 @@ export const HeadphoneScroll = () => {
           </motion.button>
         </TextOverlay>
 
-        {/* Scroll indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           initial={{ opacity: 0 }}
@@ -287,22 +270,21 @@ export const HeadphoneScroll = () => {
         >
           <span className="text-caption">Scroll to explore</span>
           <motion.div
-            className="w-6 h-10 border border-zenith-white/30 rounded-full flex items-start justify-center p-2"
+            className="w-6 h-10 border border-varg-white/30 rounded-full flex items-start justify-center p-2"
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             <motion.div
-              className="w-1.5 h-3 bg-zenith-white/60 rounded-full"
+              className="w-1.5 h-3 bg-varg-white/60 rounded-full"
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             />
           </motion.div>
         </motion.div>
 
-        {/* Progress bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-zenith-white/10">
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-varg-white/10">
           <motion.div
-            className="h-full bg-zenith-white/40"
+            className="h-full bg-varg-white/40"
             style={{ width: `${currentProgress * 100}%` }}
           />
         </div>

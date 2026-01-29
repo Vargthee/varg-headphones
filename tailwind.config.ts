@@ -50,13 +50,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        zenith: {
-          black: "hsl(var(--zenith-black))",
-          dark: "hsl(var(--zenith-dark))",
-          gray: "hsl(var(--zenith-gray))",
-          light: "hsl(var(--zenith-light))",
-          white: "hsl(var(--zenith-white))",
-          accent: "hsl(var(--zenith-accent))",
+        varg: {
+          black: "hsl(var(--varg-black))",
+          dark: "hsl(var(--varg-dark))",
+          gray: "hsl(var(--varg-gray))",
+          light: "hsl(var(--varg-light))",
+          white: "hsl(var(--varg-white))",
+          accent: "hsl(var(--varg-accent))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
