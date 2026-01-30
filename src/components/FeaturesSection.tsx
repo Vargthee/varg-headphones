@@ -70,22 +70,34 @@ const FeatureCard = ({ feature, index }: { feature: typeof features[0]; index: n
 
 export const FeaturesSection = () => {
   const headerRef = useRef(null);
-  const isHeaderInView = useInView(headerRef, { once: true });
+  const isHeaderInView = useInView(headerRef, { once: true, margin: "-50px" });
 
   return (
-    <section className="relative py-32 px-6 md:px-12 bg-varg-black">
+    <section id="features" className="relative py-32 px-6 md:px-12 bg-varg-black scroll-mt-20">
       <div className="max-w-7xl mx-auto">
         <motion.div
           ref={headerRef}
           className="text-center mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <span className="text-caption">Features</span>
-          <h2 className="text-hero text-4xl md:text-5xl lg:text-6xl mt-4">
+          <motion.span 
+            className="text-caption inline-block"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            Features
+          </motion.span>
+          <motion.h2 
+            className="text-hero text-4xl md:text-5xl lg:text-6xl mt-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             Crafted for Perfection
-          </h2>
+          </motion.h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
