@@ -12,41 +12,132 @@ const specs = [
   { label: "Codec Support", value: "LDAC, aptX HD" },
 ];
 
-export const SpecsSection = () => {
+const technologyFeatures = [
+  {
+    title: "Planar Magnetic Drivers",
+    description: "Ultra-thin diaphragm delivers pristine audio with zero distortion across the entire frequency range.",
+  },
+  {
+    title: "Adaptive EQ",
+    description: "Machine learning algorithms analyze your ear shape and adjust sound profile for personalized audio.",
+  },
+  {
+    title: "Low-Latency Codec",
+    description: "16ms audio delay ensures perfect lip-sync for gaming and video content.",
+  },
+];
+
+const TechnologySection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="relative py-32 px-6 md:px-12 bg-varg-black border-t border-varg-white/5">
+    <section id="technology" className="relative py-32 px-6 md:px-12 bg-varg-dark/30 scroll-mt-20">
       <div className="max-w-7xl mx-auto">
         <motion.div
+          ref={ref}
           className="mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <span className="text-caption">Specifications</span>
-          <h2 className="text-hero text-4xl md:text-5xl mt-4">
-            Technical Details
-          </h2>
+          <motion.span 
+            className="text-caption inline-block"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            Technology
+          </motion.span>
+          <motion.h2 
+            className="text-hero text-4xl md:text-5xl mt-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Engineering Excellence
+          </motion.h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-varg-white/10 rounded-2xl overflow-hidden">
-          {specs.map((spec, index) => (
+        <div className="grid md:grid-cols-3 gap-8">
+          {technologyFeatures.map((feature, index) => (
             <motion.div
-              key={spec.label}
-              className="bg-varg-black p-8"
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
+              key={feature.title}
+              className="glass-card p-8 group hover:bg-varg-dark/70 transition-all duration-500"
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.95 }}
+              transition={{ duration: 0.6, delay: 0.3 + index * 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              <p className="text-caption mb-2">{spec.label}</p>
-              <p className="text-hero text-2xl md:text-3xl">{spec.value}</p>
+              <div className="w-12 h-12 rounded-full bg-varg-accent/10 flex items-center justify-center mb-6 group-hover:bg-varg-accent/20 transition-colors">
+                <span className="text-varg-accent font-semibold">{String(index + 1).padStart(2, '0')}</span>
+              </div>
+              <h3 className="text-hero text-xl mb-3">{feature.title}</h3>
+              <p className="text-body">{feature.description}</p>
             </motion.div>
           ))}
         </div>
       </div>
     </section>
+  );
+};
+
+export const SpecsSection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <>
+      <TechnologySection />
+      <section id="specs" ref={ref} className="relative py-32 px-6 md:px-12 bg-varg-black border-t border-varg-white/5 scroll-mt-20">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            className="mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <motion.span 
+              className="text-caption inline-block"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              Specifications
+            </motion.span>
+            <motion.h2 
+              className="text-hero text-4xl md:text-5xl mt-4"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Technical Details
+            </motion.h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-varg-white/10 rounded-2xl overflow-hidden">
+            {specs.map((spec, index) => (
+              <motion.div
+                key={spec.label}
+                className="bg-varg-black p-8 hover:bg-varg-dark/50 transition-colors duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.3 + index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <p className="text-caption mb-2">{spec.label}</p>
+                <motion.p 
+                  className="text-hero text-2xl md:text-3xl"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.4, delay: 0.4 + index * 0.08 }}
+                >
+                  {spec.value}
+                </motion.p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

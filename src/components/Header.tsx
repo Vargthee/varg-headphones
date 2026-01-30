@@ -14,13 +14,22 @@ export const Header = () => {
         </a>
 
         <div className="hidden md:flex items-center gap-8">
-          <a href="#features" className="text-body hover:text-varg-white/90 transition-colors text-sm">
+          <a 
+            href="#features" 
+            className="text-body hover:text-varg-white/90 transition-colors text-sm relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-varg-white/50 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+          >
             Features
           </a>
-          <a href="#technology" className="text-body hover:text-varg-white/90 transition-colors text-sm">
+          <a 
+            href="#technology" 
+            className="text-body hover:text-varg-white/90 transition-colors text-sm relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-varg-white/50 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+          >
             Technology
           </a>
-          <a href="#specs" className="text-body hover:text-varg-white/90 transition-colors text-sm">
+          <a 
+            href="#specs" 
+            className="text-body hover:text-varg-white/90 transition-colors text-sm relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-varg-white/50 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
+          >
             Specs
           </a>
         </div>
