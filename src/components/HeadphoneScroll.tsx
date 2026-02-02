@@ -9,6 +9,7 @@ import ParallaxLayers from "./ParallaxLayers";
 import SlitScanCanvas from "./SlitScanCanvas";
 import ScrollTextOverlay from "./ScrollTextOverlay";
 import SoundWaves from "./SoundWaves";
+import AudioRings from "./AudioRings";
 
 const images = [headphonesHero, headphonesExploded, headphonesDriver];
 
@@ -85,6 +86,9 @@ export const HeadphoneScroll = () => {
         
         {/* Sound visualization waves */}
         <SoundWaves scrollProgress={smoothProgress} />
+        
+        {/* Audio rings emanating from headphones */}
+        <AudioRings scrollProgress={smoothProgress} />
         
         {/* Gradient spotlight overlay */}
         <div className="absolute inset-0 gradient-spotlight pointer-events-none z-[5]" />
