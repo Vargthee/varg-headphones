@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect, useCallback, useState } from "react";
 import { MotionValue } from "framer-motion";
 
 interface SlitScanCanvasProps {
@@ -7,13 +7,25 @@ interface SlitScanCanvasProps {
   isLoaded: boolean;
 }
 
+// Detect if device is mobile/low-power
+const getDevicePerformance = () => {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const hasLowMemory = (navigator as any).deviceMemory && (navigator as any).deviceMemory < 4;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return { isMobile, isLowPerf: isMobile || hasLowMemory, prefersReducedMotion };
+};
+
 export const SlitScanCanvas = ({ images, progress, isLoaded }: SlitScanCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
   const lastProgressRef = useRef<number>(0);
+  const [devicePerf] = useState(getDevicePerformance);
 
   const drawFrame = useCallback((ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, currentProgress: number) => {
-    const dpr = window.devicePixelRatio || 1;
+    const { isMobile, isLowPerf, prefersReducedMotion } = devicePerf;
+    
+    // Use lower DPR on mobile for performance
+    const dpr = isLowPerf ? Math.min(window.devicePixelRatio || 1, 2) : window.devicePixelRatio || 1;
     const width = canvas.width / dpr;
     const height = canvas.height / dpr;
 
@@ -70,13 +82,14 @@ export const SlitScanCanvas = ({ images, progress, isLoaded }: SlitScanCanvasPro
       const y = (height - h) / 2;
 
       // Slit-scan effect: draw image in horizontal slices with offset
-      if (slitOffset > 0) {
-        const sliceCount = 20;
+      // Skip slit-scan on reduced motion or use fewer slices on mobile
+      if (slitOffset > 0 && !prefersReducedMotion) {
+        const sliceCount = isLowPerf ? 10 : 20;
         const sliceHeight = h / sliceCount;
         
         for (let i = 0; i < sliceCount; i++) {
           const sliceY = y + i * sliceHeight;
-          const offset = Math.sin((i / sliceCount) * Math.PI * 2 + currentProgress * 10) * slitOffset * 30;
+          const offset = Math.sin((i / sliceCount) * Math.PI * 2 + currentProgress * 10) * slitOffset * (isLowPerf ? 15 : 30);
           
           ctx.drawImage(
             img,
@@ -100,7 +113,7 @@ export const SlitScanCanvas = ({ images, progress, isLoaded }: SlitScanCanvasPro
       drawImageWithEffects(
         images[primaryIndex], 
         primaryOpacity, 
-        slitScanIntensity,
+        isLowPerf ? slitScanIntensity * 0.5 : slitScanIntensity,
         primaryScale
       );
     }
@@ -110,41 +123,41 @@ export const SlitScanCanvas = ({ images, progress, isLoaded }: SlitScanCanvasPro
       drawImageWithEffects(
         images[secondaryIndex], 
         transitionProgress, 
-        slitScanIntensity * 0.5,
+        isLowPerf ? slitScanIntensity * 0.3 : slitScanIntensity * 0.5,
         (1 - transitionProgress) * 0.05
       );
     }
 
-    // Add subtle chromatic aberration during transitions
-    if (transitionProgress > 0 && transitionProgress < 1) {
+    // Skip chromatic aberration on low-perf devices
+    if (!isLowPerf && transitionProgress > 0 && transitionProgress < 1) {
       ctx.globalCompositeOperation = "screen";
       ctx.globalAlpha = slitScanIntensity * 0.15;
       
-      // Red channel offset
       ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
       ctx.fillRect(2, 0, width, height);
       
-      // Blue channel offset
       ctx.fillStyle = "rgba(0, 0, 255, 0.3)";
       ctx.fillRect(-2, 0, width, height);
       
       ctx.globalCompositeOperation = "source-over";
       ctx.globalAlpha = 1;
     }
-  }, [images]);
+  }, [images, devicePerf]);
 
   useEffect(() => {
     if (!isLoaded || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
+    const { isLowPerf } = devicePerf;
+    
     const ctx = canvas.getContext("2d", { 
       alpha: false,
-      desynchronized: true // GPU acceleration hint
+      desynchronized: true
     });
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = isLowPerf ? Math.min(window.devicePixelRatio || 1, 2) : window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
@@ -152,7 +165,15 @@ export const SlitScanCanvas = ({ images, progress, isLoaded }: SlitScanCanvasPro
       drawFrame(ctx, canvas, lastProgressRef.current);
     };
 
+    // Throttle updates on mobile for smoother performance
+    let lastUpdateTime = 0;
+    const throttleMs = isLowPerf ? 16 : 0; // ~60fps cap on mobile
+
     const handleProgress = (value: number) => {
+      const now = performance.now();
+      if (now - lastUpdateTime < throttleMs) return;
+      lastUpdateTime = now;
+      
       lastProgressRef.current = value;
       
       if (animationRef.current) {
@@ -175,7 +196,7 @@ export const SlitScanCanvas = ({ images, progress, isLoaded }: SlitScanCanvasPro
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isLoaded, images, progress, drawFrame]);
+  }, [isLoaded, images, progress, drawFrame, devicePerf]);
 
   return (
     <canvas
