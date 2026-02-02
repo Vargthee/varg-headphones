@@ -8,6 +8,7 @@ import headphonesDriver from "@/assets/headphones-driver.png";
 import ParallaxLayers from "./ParallaxLayers";
 import SlitScanCanvas from "./SlitScanCanvas";
 import ScrollTextOverlay from "./ScrollTextOverlay";
+import SoundWaves from "./SoundWaves";
 
 const images = [headphonesHero, headphonesExploded, headphonesDriver];
 
@@ -81,6 +82,9 @@ export const HeadphoneScroll = () => {
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Parallax background layers */}
         <ParallaxLayers scrollYProgress={scrollYProgress} />
+        
+        {/* Sound visualization waves */}
+        <SoundWaves scrollProgress={smoothProgress} />
         
         {/* Gradient spotlight overlay */}
         <div className="absolute inset-0 gradient-spotlight pointer-events-none z-[5]" />
