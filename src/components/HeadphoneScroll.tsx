@@ -89,8 +89,11 @@ export const HeadphoneScroll = () => {
   return (
     <div 
       ref={containerRef} 
-      className="relative h-[400vh] bg-varg-black"
-      style={{ contain: "layout style paint" }}
+      className="relative h-[300vh] sm:h-[400vh] bg-varg-black"
+      style={{ 
+        position: "relative",
+        contain: "layout style paint",
+      }}
     >
       {!imagesLoaded && <LoadingSpinner />}
       
