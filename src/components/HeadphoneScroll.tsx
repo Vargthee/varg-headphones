@@ -133,41 +133,41 @@ export const HeadphoneScroll = () => {
           >
             Premium Audio
           </motion.span>
-          <h1 className="text-hero text-5xl md:text-7xl lg:text-8xl xl:text-9xl leading-none">
+          <h1 className="text-hero text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl leading-none">
             Varg X.
           </h1>
-          <p className="text-hero text-3xl md:text-4xl lg:text-5xl mt-2 opacity-60">
+          <p className="text-hero text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-2 opacity-60">
             Pure Sound.
           </p>
         </ScrollTextOverlay>
 
         <ScrollTextOverlay progress={currentProgress} start={0.28} end={0.50} align="left">
-          <span className="text-caption mb-4">Engineering</span>
-          <h2 className="text-hero text-4xl md:text-5xl lg:text-6xl leading-tight max-w-lg">
+          <span className="text-caption text-xs sm:text-sm mb-3 sm:mb-4">Engineering</span>
+          <h2 className="text-hero text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight max-w-lg">
             Precision<br />Engineering.
           </h2>
-          <p className="text-body text-lg md:text-xl max-w-md mt-4">
+          <p className="text-body text-base sm:text-lg md:text-xl max-w-md mt-3 sm:mt-4">
             Every component meticulously designed for acoustic perfection.
           </p>
         </ScrollTextOverlay>
 
         <ScrollTextOverlay progress={currentProgress} start={0.55} end={0.78} align="right">
-          <span className="text-caption mb-4">Technology</span>
-          <h2 className="text-hero text-4xl md:text-5xl lg:text-6xl leading-tight max-w-lg">
+          <span className="text-caption text-xs sm:text-sm mb-3 sm:mb-4">Technology</span>
+          <h2 className="text-hero text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight max-w-lg">
             Titanium<br />Drivers.
           </h2>
-          <p className="text-body text-lg md:text-xl max-w-md mt-4">
+          <p className="text-body text-base sm:text-lg md:text-xl max-w-md mt-3 sm:mt-4">
             50mm titanium-coated drivers deliver unparalleled clarity across the entire frequency spectrum.
           </p>
         </ScrollTextOverlay>
 
         <ScrollTextOverlay progress={currentProgress} start={0.82} end={1} align="center">
-          <span className="text-caption mb-4">Experience</span>
-          <h2 className="text-hero text-5xl md:text-6xl lg:text-7xl leading-tight">
+          <span className="text-caption text-xs sm:text-sm mb-3 sm:mb-4">Experience</span>
+          <h2 className="text-hero text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight">
             Hear Everything.
           </h2>
           <motion.button
-            className="mt-8 px-8 py-4 bg-varg-white text-varg-black font-medium rounded-full text-lg hover:bg-varg-light transition-colors pointer-events-auto"
+            className="mt-6 sm:mt-8 px-6 sm:px-8 py-3 sm:py-4 bg-varg-white text-varg-black font-medium rounded-full text-base sm:text-lg hover:bg-varg-light transition-colors pointer-events-auto"
             whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255,255,255,0.3)" }}
             whileTap={{ scale: 0.98 }}
           >

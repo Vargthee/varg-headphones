@@ -49,9 +49,9 @@ export const ScrollTextOverlay = ({
   }, [progress, start, end]);
 
   const alignmentClasses = {
-    left: "items-start text-left pl-8 md:pl-16 lg:pl-24",
-    center: "items-center text-center",
-    right: "items-end text-right pr-8 md:pr-16 lg:pr-24",
+    left: "items-start text-left px-4 sm:pl-8 md:pl-16 lg:pl-24",
+    center: "items-center text-center px-4",
+    right: "items-end text-right px-4 sm:pr-8 md:pr-16 lg:pr-24",
   };
 
   return (
