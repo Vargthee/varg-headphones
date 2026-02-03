@@ -11,8 +11,9 @@ export const ParallaxLayers = ({ scrollYProgress }: ParallaxLayerProps) => {
   const { isLowPerf, prefersReducedMotion } = usePerformanceMode();
   
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: isLowPerf ? 30 : 50,
-    damping: isLowPerf ? 30 : 20,
+    stiffness: isLowPerf ? 25 : 40,
+    damping: isLowPerf ? 35 : 30,
+    mass: 0.8,
   });
 
   // Different parallax speeds for depth effect
