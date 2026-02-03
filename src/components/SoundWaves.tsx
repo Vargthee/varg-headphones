@@ -23,6 +23,10 @@ export const SoundWaves = ({ scrollProgress }: SoundWavesProps) => {
     [0.8, 1, 1.1, 1, 0.9]
   );
 
+  // Move all useTransform calls to the top level
+  const centerOpacity = useTransform(scrollProgress, [0.1, 0.3, 0.8, 1], [0, 0.5, 0.5, 0]);
+  const dotsOpacity = useTransform(scrollProgress, [0, 0.2, 0.8, 1], [0, 0.4, 0.4, 0]);
+
   // Memoize bar counts based on device
   const barCount = useMemo(() => (isMobile ? 5 : 8), [isMobile]);
   const centerBarCount = useMemo(() => (isMobile ? 12 : 24), [isMobile]);
@@ -45,7 +49,6 @@ export const SoundWaves = ({ scrollProgress }: SoundWavesProps) => {
           className="w-0.5 md:w-1 bg-gradient-to-t from-varg-white/10 via-varg-white/30 to-varg-white/10 rounded-full"
           style={{
             height: `${baseHeight}px`,
-            willChange: isLowPerf ? "auto" : "transform",
           }}
           animate={{
             scaleY: isLowPerf ? [1, 1.3, 1] : [1, 1.5 + Math.random() * 0.5, 1, 1.3, 1],
@@ -90,9 +93,7 @@ export const SoundWaves = ({ scrollProgress }: SoundWavesProps) => {
       {!isLowPerf && (
         <motion.div
           className="absolute bottom-20 left-1/2 -translate-x-1/2 flex items-end justify-center gap-0.5 md:gap-1 z-[6]"
-          style={{
-            opacity: useTransform(scrollProgress, [0.1, 0.3, 0.8, 1], [0, 0.5, 0.5, 0]),
-          }}
+          style={{ opacity: centerOpacity }}
         >
           {Array.from({ length: centerBarCount }, (_, i) => {
             const centerDistance = Math.abs(i - (centerBarCount / 2 - 0.5));
@@ -125,9 +126,7 @@ export const SoundWaves = ({ scrollProgress }: SoundWavesProps) => {
       {dotCount > 0 && (
         <motion.div
           className="absolute inset-0 pointer-events-none z-[4]"
-          style={{
-            opacity: useTransform(scrollProgress, [0, 0.2, 0.8, 1], [0, 0.4, 0.4, 0]),
-          }}
+          style={{ opacity: dotsOpacity }}
         >
           {Array.from({ length: dotCount }, (_, i) => (
             <motion.div
