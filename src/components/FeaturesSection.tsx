@@ -49,21 +49,21 @@ const features = [
 
 const FeatureCard = ({ feature, index }: { feature: typeof features[0]; index: number }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
     <motion.div
       ref={ref}
-      className="glass-card p-8 group hover:bg-varg-dark/70 transition-colors duration-500"
+      className="glass-card p-6 sm:p-8 group hover:bg-varg-dark/70 transition-colors duration-500"
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
     >
-      <div className="text-varg-accent mb-6 group-hover:text-varg-light transition-colors">
+      <div className="text-varg-accent mb-4 sm:mb-6 group-hover:text-varg-light transition-colors">
         {feature.icon}
       </div>
-      <h3 className="text-hero text-xl mb-3">{feature.title}</h3>
-      <p className="text-body">{feature.description}</p>
+      <h3 className="text-hero text-lg sm:text-xl mb-2 sm:mb-3">{feature.title}</h3>
+      <p className="text-body text-sm sm:text-base">{feature.description}</p>
     </motion.div>
   );
 };
@@ -73,17 +73,17 @@ export const FeaturesSection = () => {
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-50px" });
 
   return (
-    <section id="features" className="relative py-32 px-6 md:px-12 bg-varg-black scroll-mt-20">
+    <section id="features" className="relative py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 bg-varg-black scroll-mt-20">
       <div className="max-w-7xl mx-auto">
         <motion.div
           ref={headerRef}
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-16 md:mb-20"
           initial={{ opacity: 0, y: 50 }}
           animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           <motion.span 
-            className="text-caption inline-block"
+            className="text-caption inline-block text-xs sm:text-sm"
             initial={{ opacity: 0, y: 20 }}
             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -91,7 +91,7 @@ export const FeaturesSection = () => {
             Features
           </motion.span>
           <motion.h2 
-            className="text-hero text-4xl md:text-5xl lg:text-6xl mt-4"
+            className="text-hero text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-3 sm:mt-4"
             initial={{ opacity: 0, y: 30 }}
             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -100,7 +100,7 @@ export const FeaturesSection = () => {
           </motion.h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {features.map((feature, index) => (
             <FeatureCard key={feature.title} feature={feature} index={index} />
           ))}
