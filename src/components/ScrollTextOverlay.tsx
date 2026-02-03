@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { useMemo } from "react";
 
 interface ScrollTextOverlayProps {
   children: React.ReactNode;
@@ -8,6 +8,10 @@ interface ScrollTextOverlayProps {
   align?: "left" | "center" | "right";
 }
 
+// Easing functions for smoother animations
+const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3);
+const easeInCubic = (t: number): number => t * t * t;
+
 export const ScrollTextOverlay = ({ 
   children, 
   progress, 
@@ -15,34 +19,34 @@ export const ScrollTextOverlay = ({
   end, 
   align = "center" 
 }: ScrollTextOverlayProps) => {
-  const fadeIn = start;
-  const fadeInEnd = start + 0.06;
-  const fadeOutStart = end - 0.06;
-  const fadeOut = end;
+  const styles = useMemo(() => {
+    const fadeIn = start;
+    const fadeInEnd = start + 0.08;
+    const fadeOutStart = end - 0.08;
+    const fadeOut = end;
 
-  let opacity = 0;
-  let y = 40;
-  let scale = 0.95;
-  let blur = 4;
+    let opacity = 0;
+    let y = 30;
+    let scale = 0.98;
 
-  if (progress >= fadeIn && progress < fadeInEnd) {
-    const t = easeOutCubic((progress - fadeIn) / (fadeInEnd - fadeIn));
-    opacity = t;
-    y = 40 * (1 - t);
-    scale = 0.95 + 0.05 * t;
-    blur = 4 * (1 - t);
-  } else if (progress >= fadeInEnd && progress < fadeOutStart) {
-    opacity = 1;
-    y = 0;
-    scale = 1;
-    blur = 0;
-  } else if (progress >= fadeOutStart && progress <= fadeOut) {
-    const t = easeInCubic((progress - fadeOutStart) / (fadeOut - fadeOutStart));
-    opacity = 1 - t;
-    y = -30 * t;
-    scale = 1 - 0.05 * t;
-    blur = 4 * t;
-  }
+    if (progress >= fadeIn && progress < fadeInEnd) {
+      const t = easeOutCubic((progress - fadeIn) / (fadeInEnd - fadeIn));
+      opacity = t;
+      y = 30 * (1 - t);
+      scale = 0.98 + 0.02 * t;
+    } else if (progress >= fadeInEnd && progress < fadeOutStart) {
+      opacity = 1;
+      y = 0;
+      scale = 1;
+    } else if (progress >= fadeOutStart && progress <= fadeOut) {
+      const t = easeInCubic((progress - fadeOutStart) / (fadeOut - fadeOutStart));
+      opacity = 1 - t;
+      y = -20 * t;
+      scale = 1 - 0.02 * t;
+    }
+
+    return { opacity, y, scale };
+  }, [progress, start, end]);
 
   const alignmentClasses = {
     left: "items-start text-left pl-8 md:pl-16 lg:pl-24",
@@ -52,25 +56,17 @@ export const ScrollTextOverlay = ({
 
   return (
     <div
-      className={`absolute inset-0 flex flex-col justify-center ${alignmentClasses[align]} pointer-events-none z-10 will-change-transform`}
+      className={`absolute inset-0 flex flex-col justify-center ${alignmentClasses[align]} pointer-events-none z-10`}
       style={{
-        opacity,
-        transform: `translateY(${y}px) scale(${scale}) translateZ(0)`,
-        filter: blur > 0 ? `blur(${blur}px)` : "none",
+        opacity: styles.opacity,
+        transform: `translate3d(0, ${styles.y}px, 0) scale(${styles.scale})`,
+        transition: "opacity 0.1s ease-out, transform 0.1s ease-out",
+        willChange: "opacity, transform",
       }}
     >
       {children}
     </div>
   );
 };
-
-// Easing functions for smoother animations
-function easeOutCubic(t: number): number {
-  return 1 - Math.pow(1 - t, 3);
-}
-
-function easeInCubic(t: number): number {
-  return t * t * t;
-}
 
 export default ScrollTextOverlay;

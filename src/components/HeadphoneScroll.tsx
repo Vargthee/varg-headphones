@@ -34,9 +34,10 @@ export const HeadphoneScroll = () => {
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 25,
-    restDelta: 0.0001,
+    stiffness: 50,
+    damping: 30,
+    restDelta: 0.001,
+    mass: 0.5,
   });
 
   // Preload images with priority
@@ -62,10 +63,23 @@ export const HeadphoneScroll = () => {
   }, []);
 
   const [currentProgress, setCurrentProgress] = useState(0);
+  const progressRef = useRef(0);
 
   useEffect(() => {
-    const unsubscribe = smoothProgress.on("change", setCurrentProgress);
-    return unsubscribe;
+    let rafId: number;
+    const unsubscribe = smoothProgress.on("change", (value) => {
+      progressRef.current = value;
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          setCurrentProgress(progressRef.current);
+          rafId = 0;
+        });
+      }
+    });
+    return () => {
+      unsubscribe();
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [smoothProgress]);
 
   // Micro-interaction: subtle rotation based on scroll
