@@ -34,10 +34,10 @@ export const HeadphoneScroll = () => {
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 50,
-    damping: 30,
-    restDelta: 0.001,
-    mass: 0.5,
+    stiffness: 80,
+    damping: 40,
+    restDelta: 0.0005,
+    mass: 0.3,
   });
 
   // Preload images with priority
@@ -82,9 +82,9 @@ export const HeadphoneScroll = () => {
     };
   }, [smoothProgress]);
 
-  // Micro-interaction: subtle rotation based on scroll
-  const imageRotation = useTransform(smoothProgress, [0, 0.5, 1], [0, 2, -1]);
-  const imageScale = useTransform(smoothProgress, [0, 0.1, 0.9, 1], [1, 1.02, 1.02, 0.98]);
+  // Micro-interaction: very subtle rotation based on scroll (reduced to prevent jitter)
+  const imageRotation = useTransform(smoothProgress, [0, 0.5, 1], [0, 0.5, -0.3]);
+  const imageScale = useTransform(smoothProgress, [0, 0.1, 0.9, 1], [1, 1.01, 1.01, 0.99]);
 
   return (
     <div 

@@ -95,7 +95,9 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* Native smooth scroll disabled - framer-motion handles scroll interpolation */
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   body {
