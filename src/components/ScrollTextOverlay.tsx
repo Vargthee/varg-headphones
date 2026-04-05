@@ -60,7 +60,7 @@ export const ScrollTextOverlay = ({
       style={{
         opacity: styles.opacity,
         transform: `translate3d(0, ${styles.y}px, 0) scale(${styles.scale})`,
-        transition: "opacity 0.1s ease-out, transform 0.1s ease-out",
+        transition: "opacity 0.05s linear, transform 0.05s linear",
         willChange: "opacity, transform",
       }}
     >

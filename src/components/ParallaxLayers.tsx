@@ -58,6 +58,7 @@ export const ParallaxLayers = ({ scrollYProgress }: ParallaxLayerProps) => {
       </motion.div>
 
       {/* Mid layer - floating particles (reduced on mobile) */}
+      {/* Mid layer - reduced floating particles */}
       {!isLowPerf && (
         <motion.div
           className="absolute inset-0"
@@ -67,23 +68,22 @@ export const ParallaxLayers = ({ scrollYProgress }: ParallaxLayerProps) => {
             transform: "translateZ(0)",
           }}
         >
-          {[...Array(isMobile ? 3 : 6)].map((_, i) => (
+          {[...Array(isMobile ? 2 : 4)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-varg-white/20 rounded-full"
+              className="absolute w-1 h-1 bg-varg-white/15 rounded-full"
               style={{
-                left: `${15 + i * (isMobile ? 25 : 15)}%`,
-                top: `${20 + (i % 3) * 25}%`,
+                left: `${20 + i * (isMobile ? 30 : 18)}%`,
+                top: `${25 + (i % 2) * 30}%`,
               }}
               animate={{
-                opacity: [0.2, 0.5, 0.2],
-                scale: [1, 1.5, 1],
+                opacity: [0.15, 0.35, 0.15],
               }}
               transition={{
-                duration: 3 + i * 0.5,
+                duration: 4 + i * 0.5,
                 repeat: Infinity,
                 ease: "easeInOut",
-                delay: i * 0.3,
+                delay: i * 0.5,
               }}
             />
           ))}
