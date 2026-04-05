@@ -34,10 +34,10 @@ export const HeadphoneScroll = () => {
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 50,
-    damping: 30,
-    restDelta: 0.001,
-    mass: 0.5,
+    stiffness: 80,
+    damping: 40,
+    restDelta: 0.0005,
+    mass: 0.3,
   });
 
   // Preload images with priority
